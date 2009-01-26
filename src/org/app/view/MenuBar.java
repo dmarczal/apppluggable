@@ -2,7 +2,7 @@ package org.app.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -10,8 +10,6 @@ import javax.swing.JMenuItem;
 
 import org.app.ApplicationPlugin;
 import org.app.pluggable.LoadPlugins;
-
-import com.sun.org.apache.xalan.internal.xsltc.runtime.Hashtable;
 
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar {
@@ -82,23 +80,19 @@ public class MenuBar extends JMenuBar {
 	       
 		JMenu newMenu = new JMenu("Novo");
 		
-		ArrayList<Object[]> panels = load.addDynamicPlugin();
+		final LinkedHashMap<String, ApplicationPlugin> plugins = load.addDynamicPlugin();
 		
-		for (final Object[] o : panels) {
-			final ApplicationPlugin p = (ApplicationPlugin) o[0];
-			String name = (String) ((Hashtable) o[1]).get("name");
-			JMenuItem menu = new JMenuItem(name);
-			
+		for (final Object key : plugins.keySet()) {
+			JMenuItem menu = new JMenuItem(key.toString());
 			
 			menu.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					main.addMainPanel(p);
+					main.addMainPanel(plugins.get(key));
 				}				
 			});
 			
 			newMenu.add(menu);
-			
 			this.add(newMenu);
 			
 		}

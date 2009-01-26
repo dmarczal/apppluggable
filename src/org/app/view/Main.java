@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.Enumeration;
+import java.util.LinkedHashMap;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,6 +16,7 @@ import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 
+import org.app.ApplicationPlugin;
 import org.app.model.FontSize;
 
 @SuppressWarnings("serial")
@@ -23,7 +25,8 @@ public class Main extends JApplet implements Observer{
 	private JMenuBar jmenu;
 	private GridBagConstraints c;
 	private JPanel jpMain;
-	private JPanel jpOptions;
+	private JPanelOptions jpOptions;
+	private JPanelSequencer jpSequencer;
 
 	public void init() {
 		inicializeVariables();
@@ -48,8 +51,9 @@ public class Main extends JApplet implements Observer{
 		jmenu = new MenuBar(this);
 		c = new GridBagConstraints();
 		jpMain = new JPanelMain();
-		jpOptions = new JPanelOptions();
+		jpOptions = new JPanelOptions(this);
 		FontSize.getInstance().addObserver(this);
+		jpSequencer = new JPanelSequencer(this);
 	}
 
 
@@ -70,8 +74,22 @@ public class Main extends JApplet implements Observer{
 		c.gridy = 1;
 
 		c.gridwidth = 1;
-
+		
+		
+		if (newMain instanceof ApplicationPlugin) {
+			LinkedHashMap<String, JPanel> ap = ((ApplicationPlugin) newMain).getPanelsList();
+			if (ap != null){
+				jpSequencer.setList(ap);
+				jpOptions.remove(jpSequencer);
+				jpOptions.add(jpSequencer);
+			}else{
+				jpOptions.remove(jpSequencer);
+			}
+		}
+		
+		
 		this.getContentPane().add(jpMain, c);
+		//validate();
 		SwingUtilities.updateComponentTreeUI(this);
 	}
 
@@ -99,7 +117,6 @@ public class Main extends JApplet implements Observer{
 				} 
 			}
 		}
-		
 		SwingUtilities.updateComponentTreeUI(this);
 	}
 

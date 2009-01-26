@@ -2,9 +2,10 @@ package org.app.pluggable;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 
+import org.app.ApplicationPlugin;
 import org.java.plugin.ObjectFactory;
 import org.java.plugin.PluginManager;
 import org.java.plugin.PluginManager.PluginLocation;
@@ -12,8 +13,6 @@ import org.java.plugin.registry.Extension;
 import org.java.plugin.registry.ExtensionPoint;
 import org.java.plugin.registry.PluginDescriptor;
 import org.java.plugin.standard.StandardPluginLocation;
-
-import com.sun.org.apache.xalan.internal.xsltc.runtime.Hashtable;
 
 
 public class LoadPlugins {
@@ -58,7 +57,7 @@ public class LoadPlugins {
 
 	}
 	
-    public ArrayList<Object[]> addDynamicPlugin() {
+    public LinkedHashMap<String, ApplicationPlugin> addDynamicPlugin() {
 		
 		try {
 			
@@ -66,7 +65,7 @@ public class LoadPlugins {
 			
 			ExtensionPoint point = pluginManager.getRegistry().getExtensionPoint(core.getId(), "Tool");
 			
-			ArrayList<Object[]> list = new ArrayList<Object[]>();
+			LinkedHashMap<String, ApplicationPlugin> objects = new LinkedHashMap<String, ApplicationPlugin>();
 			
 			for (Iterator<?> it = point.getConnectedExtensions().iterator(); it.hasNext();) {
 			
@@ -83,19 +82,13 @@ public class LoadPlugins {
 				//System.out.println(" "+ext.getParameter("name").valueAsString());
 				//System.out.println(" "+ext.getParameter("class").valueAsString());
 				
-				Hashtable params = new Hashtable();
-				params.put("name", ext.getParameter("name").valueAsString());
 				
-				Object[] o = new Object[2];
 				
-				o[0] = pluginCls.newInstance();
-				o[1] = params;
-				
-				list.add(o);				
+				objects.put(ext.getParameter("name").valueAsString(), (ApplicationPlugin) pluginCls.newInstance());				
 				
 			}
 			
-			return list;
+			return objects;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
