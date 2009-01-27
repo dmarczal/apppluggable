@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<!DOCTYPE plugin PUBLIC "-//JPF//Java Plug-in Manifest 1.0" "http://jpf.sourceforge.net/plugin_1_0.dtd">
+<plugin id="org.app.pluginDemo" version="0.0.1">
+    <requires>
+        <import plugin-id="org.app.plugin.core"/>
+    </requires>
+    <runtime>
+        <library id="JPanelDemo" path="classes/" type="code">
+            <export prefix="*" />
+        </library>
+    </runtime>
+    <extension plugin-id="org.app.plugin.core" point-id="Tool" id="JPanelDemoTool">
+        <parameter id="class" value="org.app.pluginDemo.JPanelDemo"/>
+        <parameter id="name" value="JPanelDemo"/>
+    </extension>
+</plugin>

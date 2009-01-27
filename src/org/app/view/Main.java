@@ -77,8 +77,10 @@ public class Main extends JApplet implements Observer{
 		
 		
 		if (newMain instanceof ApplicationPlugin) {
-			LinkedHashMap<String, JPanel> ap = ((ApplicationPlugin) newMain).getPanelsList();
-			if (ap != null){
+			LinkedHashMap<String, JPanel> ap = new LinkedHashMap<String, JPanel>();
+			ap.put("Inicial", jpMain);
+			if (((ApplicationPlugin) newMain).getPanelsList() != null){
+				ap.putAll(((ApplicationPlugin) newMain).getPanelsList());
 				jpSequencer.setList(ap);
 				jpOptions.remove(jpSequencer);
 				jpOptions.add(jpSequencer);
