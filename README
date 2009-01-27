@@ -1,0 +1,350 @@
+Configurando o ambiente do projeto do controlador (AppPluggable)
+
+
+
+1. Abra o eclipse
+
+
+
+2. Abra o terminal e entre no seu workspace (Diretório onde estão seus projetos do Eclipse)
+
+
+
+3. Execute o seguinte comando
+
+
+
+   $ git clone git://github.com/marczal/apppluggable.git
+
+
+
+OBS: Para este comando funcionar é necessário que você tenha instalado em sua máquina o git
+
+
+
+4. No eclipse vai em: File -> Iimport, então selecione a pasta General e dentro dela selecione
+
+   Existing Projects into Workspace e clique em Next,
+
+   Após isso em Select root directory clique em Browse... e encontre a pasta apppluggable dentro do seu
+
+   workspace selecione ela.
+
+   Selecione também "Copy projects into workspace" e clique em finish.
+
+
+
+5. Após isso você verá o projeto porém ele contém alguns erro. Para corrigir os erros faça o seguinte
+
+
+
+  5.1   No terminal dentro do seu workspace execute o comando
+
+        $ rm -rf apppluggable
+
+        Esse comando é necessário para que você não fique com duas cópias do mesmo projeto em seu workspace
+
+
+
+  5.2  Após isso é necessário que você configure o build path do seu projetos
+
+       Para isso:
+
+
+
+       Selecione o projeto e aperte alt+enter, então uma janela abrirá, selecione a a opção Java Build Path, na aba
+
+       Libraries remova todas as libraries exeto JRE System Library.
+
+
+
+       Após isso Adicione todos os jars da pasta lib do projeto AppPluggable do seu workspace, da seguinte maneira:
+
+       Clique em Add External Jars, vá até a pasta lib e selecione todos os jar e os adicione no build path.
+
+
+
+       OBS: Aqui você terá que entrar dentro das sub pasta e adicionar os jars que estão dentro delas separadamente, pois o
+   eclipse não pega os jars da sub pastas automaticamente.
+
+
+
+       Feito isso clique em Java Compiler -> Selecione o Checkbox Enable project specific settings
+
+       em Compiler compliance level selecione Java 6.0
+
+       marque o checkbox Use default compliance settings
+
+       Clique em ok e após isso eclipse pedirá para recompilar o projeto clique em yes
+
+
+6. Feito isso você verá que somente as classes de testes estão com erros, pois falta as bibliotecas do testNG, para instalar   vamos usar um plugin 
+do eclipse que traz com ele uma interface para teste:
+
+
+
+  6.1 Vá em Help -> Softwares Updates -> Find and Install..
+
+      Selecione Search new features to install
+
+      Clique em next
+
+
+
+  6.2 Clique em New Remote Site
+
+      Preencha o name com TestNG
+
+      e na url coloque o seguinte link
+
+      http://beust.com/eclipse
+
+      clique em ok
+
+      Após clique em finish
+
+      Então uma janela aparecerá com os resultados das buscas
+
+      Marque a opção TestNG
+
+      Clique em Next
+
+      Aceite os termos de licença
+
+      clique em next então em finish.
+
+
+
+  6.3 Após Abrirá um outra janela
+
+      clique em install
+
+      Então o eclipse pedirá para ser reiniciado
+
+      Clique em yes
+
+      O eclipse reiniciará
+
+
+
+7. Após isso vá te a classe FontSize_Test em org.test.app.model
+
+   clique sobre a lâmpada com o x vermelho
+
+   O eclipse vai sugerir algumas correções
+
+   Clique em Add TestNG Library
+
+
+
+8. Aqui a aplicação não terá mais erro e você poderá executar ela
+
+   indo em:
+
+
+
+   org.app.viw
+
+    Clase Main
+
+
+
+  Clique com o botão direito do mouse sobre a classe Main e vá em run Applet.
+
+
+
+Caso ocorra o seguinte erro:
+
+
+
+Exception in thread "main" java.lang.NoClassDefFoundError: sun.applet.AppletViewer
+
+   at gnu.java.lang.MainThread.run(libgcj.so.90)
+
+Caused by: java.lang.ClassNotFoundException: sun.applet.AppletViewer not found in 
+gnu.gcj.runtime.SystemClassLoader{urls=[file:/home/ppginf/diego/Desktop/workspaceNew/AppPluggable/bin/,file:/home/ppginf/diego/Desktop/workspaceNew/AppPluggable/lib/Fest-Swing/lib/debug-1.0.jar,file:/home/ppginf/diego/Desktop/workspaceNew/AppPluggable/lib/Fest-Swing/lib/fest-assert-1.0.jar,file:/home/ppginf/diego/Desktop/workspaceNew/AppPluggable/lib/Fest-Swing/lib/fest-assert-1.0-sources.jar,file:/home/ppginf/diego/Desktop/workspaceNew/AppPluggable/lib/Fest-Swing/lib/fest-reflect-1.0.jar,file:/home/ppginf/diego/Desktop/workspaceNew/AppPluggable/lib/Fest-Swing/lib/fest-reflect-1.0-sources.jar,file:/home/ppginf/diego/Desktop/workspaceNew/AppPluggable/lib/Fest-Swing/lib/fest-util-1.0.jar,file:/home/ppginf/diego/Desktop/workspaceNew/AppPluggable/lib/Fest-Swing/lib/fest-util-1.0-sources.jar,file:/home/ppginf/diego/Desktop/workspaceNew/AppPluggable/lib/Fest-Swing/lib/jcip-annotations-1.0.jar,file:/home/ppginf/diego/Desktop/workspaceNew/AppPluggable/lib/Fest-Swing/lib/MRJToolkitStubs-1.0.jar,file:/home/ppginf/diego/Desktop/workspaceNew/AppPluggable/lib/Fest-Swing/fest-swing-1.0rc2.jar,file:/home/ppginf/diego/Desktop/workspaceNew/AppPluggable/lib/commons-logging.jar,file:/home/ppginf/diego/Desktop/workspaceNew/AppPluggable/lib/JPF.jar,file:/home/ppginf/diego/Desktop/workspaceNew/AppPluggable/lib/log4j.jar,file:/home/ppginf/diego/.eclipse/org.eclipse.sdk.ide/updates/eclipse/plugins/org.testng.eclipse_5.8.0.2/lib/testng-jdk15.jar], 
+parent=gnu.gcj.runtime.ExtensionClassLoader{urls=[], parent=null}}
+
+
+
+Faça
+
+
+
+1. Selecione o projeto
+
+   tecle Alt + Enter
+
+   Vá em Java Compiler
+
+   Na última linha clique no link installed JREs
+
+   Clique em Add
+
+   Em JRE name coloque Java 6
+
+   JRE home Directory coloque /usr/lib/jvm/java-6-sun-1.6.0.07/
+
+   clique em ok
+
+   selecione Java 6
+
+   clique em ok
+
+
+
+Feito execute novamente e o projeto rodará
+
+
+
+
+
+Lembrando: Os plugins estão na classe src/plugins você pode adicionar e remover plugins. Só não remova o plugin
+
+org.app.plugin.core-0.0.1.zip.
+
+
+
+
+
+Para criar um plugin
+
+
+
+Segui a estrutura dos plugins ComboBoxDemo e do JPanelDemo, somente foram enviado os arquivos .java dos plugins
+
+(que estão na pasta módulos)
+
+
+
+Exemplo
+
+
+
+1. Crie um novo projeto no eclipse
+
+
+
+2. Copie a pasta org e o arquivo plugin.xml para dentro do seu novo projetos
+
+
+
+3. Após crie uma pasta chamada lib dentro do seu projeto
+
+
+
+   copie o jar AppPluggable.jar da pasta Módulos/lib para a pasta que você criou
+
+
+
+   adicione no classpath de sua aplicação o jar
+
+
+
+   Com isso a aplicação não terá erros e você pode alterar esse plugin.
+
+
+
+   OBS: Caso você esteja criando um plugin do zero, você deve adicionar o jar em seu classpath
+
+   e na sua classe principal você deve estender a classe ApplicationPlugin deste jar.
+
+   Extendo essa classe você terá que implemetar o método getPanelsList. Nela deve conter um
+
+   LinkedHashMap<String, JPanel> contendo a o nome e o panel do exercicio. Aqui estou considerando que
+
+   cada exercício será desenvolvido em uma jpanel separado.
+
+
+
+   Segue o exemplo
+
+
+
+
+
+   public LinkedHashMap<String, JPanel> getPanelsList() {
+
+	  	LinkedHashMap<String, JPanel> l = new LinkedHashMap<String, JPanel>();
+
+
+
+		 l.put("Exercício 1", new JPanelExerciseOne());
+
+	  	l.put("Exercício 2", new JPanelExerciseTwo());
+
+  		l.put("Exercício 3", new JPanelExerciseThree());
+
+
+
+		return l;
+
+	}
+
+
+
+
+
+
+
+   OBS: Não esqueça de verificar se você esta usando o Java 6
+
+
+
+4. Após suas modificações:
+
+
+
+   Configure o plugin.xml alterando os seguintes campos (escritos com "ALTERAR")
+
+
+
+   <?xml version="1.0" ?>
+
+<!DOCTYPE plugin PUBLIC "-//JPF//Java Plug-in Manifest 1.0" "http://jpf.sourceforge.net/plugin_1_0.dtd">
+
+<plugin id="ALTERAR" version="0.0.1">
+
+    <requires>
+
+        <import plugin-id="org.app.plugin.core"/>
+
+    </requires>
+
+    <runtime>
+
+        <library id="ALTERAR" path="classes/" type="code">
+
+            <export prefix="*" />
+
+        </library>
+
+    </runtime>
+
+    <extension plugin-id="org.app.plugin.core" point-id="Tool" id="ALTERAR">
+
+        <parameter id="class" value="ALTERAR"/>
+
+        <parameter id="name" value="ALTERAR"/>
+
+    </extension>
+
+</plugin>
+
+
+
+
+
+
+
+   Vá até a pasta bin do seu projeto
+
+   Selecione a pasta org e o arquivo plugin.xml
+
+   zip eles
+
+   Coloque os na pasta src/plugin do controlador (AppPlugAble)
+
+
+
+   Rode a aplicação e verá seu novo plugin
