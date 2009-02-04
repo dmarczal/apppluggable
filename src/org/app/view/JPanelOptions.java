@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import org.app.model.FontSize;
+import org.app.view.calculador.Calculator;
 
 @SuppressWarnings("serial")
 public class JPanelOptions  extends JPanel{
@@ -19,9 +20,12 @@ public class JPanelOptions  extends JPanel{
 	private JButton upSizeLetter;
 	private JButton downSizeLetter;
 	private JButton originalSizeLetter;
+	private JButton calculator;
 
 	private JComboBox jcbExercisetList;
 	private Main main;
+	
+	private Calculator calc;
 	
 	public JPanelOptions(Main main) {
 		setBorder(BorderFactory.createEtchedBorder());
@@ -32,10 +36,17 @@ public class JPanelOptions  extends JPanel{
 				
 		createJButtons();
 		setJButtosListeners();
+		
+		calc = new Calculator();
 	}
 
 	
 	private void createJButtons(){		
+		calculator = new JButton("Calculadora");
+		calculator.setName("Calculator");
+		this.add(calculator);	
+		//calculator.setFont(new Font("monspaced", Font.BOLD, 19));
+
 		originalSizeLetter = new JButton("A");
 		originalSizeLetter.setName("originalSizeLetter");
 		this.add(originalSizeLetter);
@@ -47,6 +58,7 @@ public class JPanelOptions  extends JPanel{
 		upSizeLetter = new JButton("A+");
 		upSizeLetter.setName("upSizeLetter");
 		this.add(upSizeLetter);
+		
 	}
 
 	
@@ -66,6 +78,14 @@ public class JPanelOptions  extends JPanel{
 		originalSizeLetter.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				FontSize.getInstance().beginSize();
+			}
+		});
+		
+		calculator.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				if (!calc.isVisible()){
+					calc.setVisible(true);
+				}
 			}
 		});
 	}

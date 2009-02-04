@@ -1,20 +1,20 @@
 package org.app.view;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JApplet;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.UIDefaults;
 import javax.swing.UIManager;
-import javax.swing.plaf.FontUIResource;
 
 import org.app.ApplicationPlugin;
 import org.app.model.FontSize;
@@ -40,9 +40,11 @@ public class Main extends JApplet implements Observer{
 		try {
 			UIManager.setLookAndFeel(
 					UIManager.getCrossPlatformLookAndFeelClassName());
+			//			 UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		setFontSizeLetter(12);
 	}
 
 	private void inicializeVariables(){
@@ -74,8 +76,8 @@ public class Main extends JApplet implements Observer{
 		c.gridy = 1;
 
 		c.gridwidth = 1;
-		
-		
+
+
 		if (newMain instanceof ApplicationPlugin) {
 			LinkedHashMap<String, JPanel> ap = new LinkedHashMap<String, JPanel>();
 			ap.put("Inicial", jpMain);
@@ -88,11 +90,11 @@ public class Main extends JApplet implements Observer{
 				jpOptions.remove(jpSequencer);
 			}
 		}
-		
-		
+
+
 		this.getContentPane().add(jpMain, c);
-		//validate();
-		SwingUtilities.updateComponentTreeUI(this);
+		changeFontSize(this, FontSize.getInstance().getSize());
+		//SwingUtilities.updateComponentTreeUI(this);
 	}
 
 	public void addPanelOptions(){
@@ -105,22 +107,27 @@ public class Main extends JApplet implements Observer{
 	}
 
 	private void setFontSizeLetter(int size){
-		UIDefaults defaults = UIManager.getDefaults();
-
-		Enumeration<?> keys = defaults.keys();
-		while(keys.hasMoreElements()) {
-			Object key = keys.nextElement();
-			Object value = defaults.get(key);
-			if(value != null && value instanceof Font) {
-				UIManager.put(key, null);
-				Font font = UIManager.getFont(key);
-				if(font != null) {
-					UIManager.put(key, new FontUIResource(new Font("Arial",Font.PLAIN, size)));
-				} 
-			}
-		}
+		changeFontSize(this, size);
 		SwingUtilities.updateComponentTreeUI(this);
 	}
+
+	private void changeFontSize(Container c, int size){
+		Font f;
+
+		for (Component	comp : c.getComponents()) {
+			f = new Font(comp.getFont().getFamily(), comp.getFont().getStyle(), size);
+
+			if (comp instanceof JMenu) {
+				int count = ((JMenu) comp).getItemCount();
+				for (int i = 0; i < count; i++) {
+					((JMenu) comp).getItem(i).setFont(f);
+				}
+			}		
+			comp.setFont(f);
+			changeFontSize((Container)comp, size);
+		}
+	}
+
 
 	@Override
 	public void start() {

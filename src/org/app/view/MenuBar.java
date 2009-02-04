@@ -33,31 +33,32 @@ public class MenuBar extends JMenuBar {
 	
 		menu = new JMenu("Menu");
 		menu_Panel_One = new JMenuItem("Item A");
-		menu_Panel_Two = new JMenuItem("Item B");		
-	
+		menu_Panel_Two = new JMenuItem("Item B");	
+		//menu_Panel_One.setFont(new Font("monspaced", Font.BOLD, 19));
+		
+		
 		menu.setName("MenuBar");
 	   
 		menu_Panel_One.setName("Item A");
-		
 		menu.add(menu_Panel_One);
 		
 		menu_Panel_Two.setName("Item B");
-		
 		menu.add(menu_Panel_Two);
 		
 	    menuExit = new JMenuItem("Sair");
 		
+	    
 		menuExit.setName("Exit");
-		
 		menu.add(menuExit);	
 		this.add(menu);		
 	}
+	
+	int i = 10;
 	
 	public void setListeners(){
 		menu_Panel_One.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				main.addMainPanel(new JPanelHello());
-				
 			}
 		});
 		
